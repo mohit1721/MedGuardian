@@ -84,7 +84,7 @@ const MedicationCard = ({ medication }) => {
           onClick={() => router.push(`/medication-progress/${medication?._id}`)}
           className="px-4 text-sm w-fit py-2 bg-[#A6CDC6] text-[#16404D] rounded hover:text-[#A6CDC6] hover:bg-[#16404D] transition-all"
         >
-          View Details
+          View Detail
         </button>
       </div>
 

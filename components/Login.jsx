@@ -20,14 +20,14 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleLogin} className="bg-[#EFE9D5] p-6 rounded-lg shadow-lg mx-auto max-w-md w-full">
+    <form onSubmit={handleLogin} className="bg-[#EFE9D5] text-black/50 p-6 rounded-lg shadow-lg mx-auto max-w-md w-full">
       <h2 className="text-2xl text-black/50 font-semibold text-center mb-6">Welcome Back !</h2>
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="block bg-[#EFE9D5] w-full p-3 mb-4 border border-gray-300 rounded"
+        className="block bg-[#EFE9D5] text-black/50 w-full p-3 mb-4 border border-gray-300 rounded"
       />
       <input
         type="password"

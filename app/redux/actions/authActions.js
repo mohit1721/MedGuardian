@@ -3,7 +3,7 @@
 import axios from "axios";
 import { loginUser, logoutUser } from "../reducers/authReducer";
 import { useRouter } from "next/navigation";
-
+import {toast} from "react-hot-toast"
 // Action for logging in the user
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -11,7 +11,7 @@ export const login = (email, password) => async (dispatch) => {
     const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
     if (response.status === 200) {
         const { user, token } = response.data;
-  
+      toast.success(response.data.message);
         // Store user and token in localStorage
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", token);
@@ -39,8 +39,9 @@ export const logout = () => (dispatch) => {
   // Remove user and token from localStorage
   localStorage.removeItem("user");
   localStorage.removeItem("token");
-
+  toast.success("Logged out successfully")
   // Dispatch logoutUser action to update Redux state
   dispatch(logoutUser());
+  
   window.location.href = "/";  // Redirect to the homepage after logout
 };

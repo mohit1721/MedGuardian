@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "MedGuardian - Smart Medication Reminder & Health Tracker App",
-  description: "MediTracker is an advanced medication reminder app that helps you track and manage your daily medicine intake. Get real-time alerts, dose history, and missed dose tracking—all in one place! Stay healthy with the best medicine tracker app today!",
+  description: "MedGuardian is an advanced medication reminder app that helps you track and manage your daily medicine intake. Get real-time alerts, dose history, and missed dose tracking—all in one place! Stay healthy with the best medicine tracker app today!",
 };
 
 export default function RootLayout({ children }) {
