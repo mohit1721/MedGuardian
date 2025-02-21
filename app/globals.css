@@ -2,20 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #40c388;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1e964e;
+    --foreground: #c9d9d1;
   }
-}
+} */
 
-body {
+/* body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+} */
+
+/* Set default light mode background */
+/* Light Mode */
+:root {
+  --background: linear-gradient(135deg, #27445D, #71BBB2);
+  --foreground: #EFE9D5; /* Softer contrast for text */
+  --primary: #497D74;
+  --secondary: #EFE9D5;
+  --card-bg: rgba(255, 255, 255, 0.85); /* Light translucent card */
+  --shadow: rgba(0, 0, 0, 0.2);
 }
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: linear-gradient(135deg, #071A2C, #497D74); /* Subtle dark tones */
+    --foreground: #EFE9D5;
+    --primary: #71BBB2;
+    --secondary: #1F2937;
+    --card-bg: rgba(39, 68, 93, 0.9); /* Dark translucent card */
+    --shadow: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Global Styles */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+ 
+}
+
+ 
+button {
+  background: var(--primary);
+  color: var(--secondary);
+  border: none;
+  padding: 12px 24px;
+  width: fit-content;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: cursor 0.3s ease-in-out;
+}
+
+ 
