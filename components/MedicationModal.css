@@ -9,6 +9,7 @@
     justify-content: center;
     pointer-events: auto; /* Allow interaction with the modal */
   }
+ 
   
   /* Modal Content */
   .modal-content {

@@ -54,8 +54,8 @@ body {
 
  
 button {
-  background: var(--primary);
-  color: var(--secondary);
+  /* background: var(--primary);
+  color: var(--secondary); */
   border: none;
   padding: 12px 24px;
   width: fit-content;
@@ -65,4 +65,12 @@ button {
   transition: cursor 0.3s ease-in-out;
 }
 
- 
+/* Hide scrollbar for Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
+}
