@@ -13,7 +13,7 @@ import { toast } from "react-hot-toast";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardianbe.onrender.com/api"; 
 const MEDICATIONS_URL = `${BASE_URL}/medications`;
-
+// const MEDICATIONS_URL= "http://localhost:5000/api/medications"
 export const fetchMedications = () => async (dispatch) => {
   try {
     const authHeader = getAuthorizationHeader();
