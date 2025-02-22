@@ -12,13 +12,14 @@ import { getAuthorizationHeader } from "../../../utils/authorization";
 import { toast } from "react-hot-toast";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardianbe.onrender.com/api"; 
- 
+const MEDICATIONS_URL = `${BASE_URL}/medications`;
+
 export const fetchMedications = () => async (dispatch) => {
   try {
     const authHeader = getAuthorizationHeader();
     if (!authHeader) return;
 
-    const response = await axios.get(BASE_URL, { headers: authHeader });
+    const response = await axios.get(MEDICATIONS_URL, { headers: authHeader });
     dispatch(setMedications(Array.isArray(response?.data) ? response?.data : []));
   } catch (error) {
     console.log("Error fetching medications:", error.response?.data || error.message);
@@ -32,7 +33,7 @@ export const fetchMedicationById = (medicationId) => async (dispatch) => {
     const authHeader = getAuthorizationHeader();
     if (!authHeader) return Promise.reject("Unauthorized: No token found");
 
-    const response = await axios.get(`${BASE_URL}/${medicationId}`, { headers: authHeader });
+    const response = await axios.get(`${MEDICATIONS_URL}/${medicationId}`, { headers: authHeader });
     console.log("✅ Fetched medication data:", response.data);
     dispatch(setCurrentMedication(response.data));
     return response.data;
@@ -48,7 +49,7 @@ export const createMedicationAction = (medicationData) => async (dispatch) => {
     const authHeader = getAuthorizationHeader();
     if (!authHeader) return;
 
-    const response = await axios.post(BASE_URL, medicationData, { headers: authHeader });
+    const response = await axios.post(MEDICATIONS_URL, medicationData, { headers: authHeader });
     if (!response.data || !response.data.newMedication) {
       throw new Error("Invalid response from server: Medication data is missing.");
     }
@@ -67,7 +68,7 @@ export const modifyMedicationAction = (medicationData) => async (dispatch, getSt
     const authHeader = getAuthorizationHeader();
     if (!authHeader) return;
 
-    const response = await axios.put(`${BASE_URL}/${medicationData._id}`, medicationData, { headers: authHeader });
+    const response = await axios.put(`${MEDICATIONS_URL}/${medicationData._id}`, medicationData, { headers: authHeader });
     dispatch(updateMedication(response.data.medication));
 
     const { medications } = getState().medications;
@@ -87,7 +88,7 @@ export const deleteMedicationAction = (medicationId) => async (dispatch) => {
     const authHeader = getAuthorizationHeader();
     if (!authHeader) return;
 
-    await axios.delete(`${BASE_URL}/${medicationId}`, { headers: authHeader });
+    await axios.delete(`${MEDICATIONS_URL}/${medicationId}`, { headers: authHeader });
     dispatch(deleteMedication(medicationId));
   } catch (error) {
     console.log("Error deleting medication:", error);
@@ -103,7 +104,7 @@ export const markAsTakenAction = (medicationId, doseTime) => async (dispatch) =>
     console.log(`🔄 Marking dose ${doseTime} as taken for medication ID:`, medicationId);
 
     const response = await axios.put(
-      `${API_BASE_URL}/mark-as-taken/${medicationId}`,
+      `${MEDICATIONS_URL}/mark-as-taken/${medicationId}`,
       { doseTime },
       { headers: authHeader }
     );
