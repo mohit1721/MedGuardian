@@ -3,15 +3,25 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUserFromStorage } from "../redux/reducers/authReducer";
+import { loginUser } from "../redux/reducers/authReducer";
 
 const LoadUser = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(setUserFromStorage());
+    const storedUser = JSON.parse(localStorage.getItem("persist:root"))?.auth;
+    if (storedUser) {
+      const user = JSON.parse(storedUser).user;
+      if (user) dispatch(loginUser(user));
+    }
   }, [dispatch]);
 
   return null;
+
+  // useEffect(() => {
+  //   dispatch(setUserFromStorage());
+  // }, [dispatch]);
+
+  // return null;
 };
 
 export default LoadUser;
