@@ -146,7 +146,7 @@ const MedicationDetailsPage = () => {
     try {
       await dispatch(markAsTakenAction(medication._id, doseTime));
     } catch (error) {
-      console.error("Error marking medication as taken:", error);
+      console.log("Error marking medication as taken:", error);
     }
   };
 

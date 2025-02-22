@@ -150,7 +150,7 @@ export const fetchMedications = () => async (dispatch) => {
     const response = await axios.get(API_BASE_URL, { headers: authHeader });
     dispatch(setMedications(Array.isArray(response?.data) ? response?.data : []));
   } catch (error) {
-    console.error("Error fetching medications:", error.response?.data || error.message);
+    console.log("Error fetching medications:", error.response?.data || error.message);
   }
 };
 
@@ -167,7 +167,7 @@ export const fetchMedicationById = (medicationId) => async (dispatch) => {
     dispatch(setCurrentMedication(response.data)); // Store the fetched medication in Redux
     return response.data;
   } catch (error) {
-    console.error("❌ Error fetching medication:", error);
+    console.log("❌ Error fetching medication:", error);
     return Promise.reject(error);
   }
 };
@@ -187,7 +187,8 @@ export const createMedicationAction = (medicationData) => async (dispatch) => {
     dispatch(addMedication(response.data.newMedication));  // ✅ Naya medication Redux store me push hoga
     toast.success("Medication added successfully!");
   } catch (error) {
-    console.error("Error adding medication:", error);
+    toast.error("Error adding medication");
+    console.log("Error adding medication:", error)
   }
 };
 
@@ -210,7 +211,7 @@ export const modifyMedicationAction = (medicationData) => async (dispatch, getSt
     dispatch(setMedications(updatedMedications)); // ✅ Ensure UI updates
 
   } catch (error) {
-    console.error("Error updating medication:", error);
+    console.log("Error updating medication:", error);
   }
 };
 
@@ -226,39 +227,11 @@ export const deleteMedicationAction = (medicationId) => async (dispatch) => {
     // toast.success(response.data.message)
   } catch (error) {
     // toast.error(response.data.message)
-    console.error("Error deleting medication:", error);
+    console.log("Error deleting medication:", error);
   }
 };
 // ✅ Mark a specific dose as taken
 
-// export const markAsTakenAction = (medicationId, doseTime) => async (dispatch) => {
-//   try {
-//     const authHeader = getAuthorizationHeader();
-//     if (!authHeader) return;
-
-//     console.log(`🔄 Marking dose ${doseTime} as taken for medication ID:`, medicationId);
-
-//     // Make API call to mark the dose as taken
-//     const response = await axios.put(
-//       `${API_BASE_URL}/mark-as-taken/${medicationId}`,
-//       { doseTime: doseTime }, // ✅ Pass `time` in the request body
-//       { headers: authHeader }
-//     );
-
-//     console.log("✅ Marked as taken response:", response.data);
-
-//     // Dispatch action to update medication in Redux store
-//     dispatch(updateMedication(response.data.medication));
-
-//     // Display success message
-//     toast.success(response.data.message);
-
-//     return response;
-//   } catch (error) {
-//     console.error("❌ Error marking medication as taken:", error);
-//     toast.error(error.response?.data?.error || "Error marking medication as taken. Please try again.");
-//   }
-// };
 export const markAsTakenAction = (medicationId, doseTime) => async (dispatch) => {
   try {
     const authHeader = getAuthorizationHeader();
@@ -282,7 +255,7 @@ export const markAsTakenAction = (medicationId, doseTime) => async (dispatch) =>
 
     return response;
   } catch (error) {
-    console.error("❌ Error marking medication as taken:", error);
+    console.log("❌ Error marking medication as taken:", error);
     toast.error(error.response?.data?.error || "Error marking medication as taken. Please try again.");
   }
 };

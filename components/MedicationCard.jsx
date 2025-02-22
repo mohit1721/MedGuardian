@@ -37,7 +37,7 @@ const MedicationCard = ({ medication }) => {
       await dispatch(deleteMedicationAction(medication._id));
       setShowDeleteModal(false);
     } catch (error) {
-      console.error("Error deleting medication:", error);
+      console.log("Error deleting medication:", error);
     } finally {
       setLoadingDose(false);
     }

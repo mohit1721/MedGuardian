@@ -4,7 +4,7 @@ export const getAuthorizationHeader = () => {
     const token = localStorage.getItem("token");
   
     if (!token) {
-      console.error("No authentication token found.");
+      console.log("No authentication token found.");
       return null;
     }
   

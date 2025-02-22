@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../app/redux/actions/authActions";
 import { useRouter } from 'next/navigation'; // Now correctly used inside a React component
-
+import {toast} from "react-hot-toast"
 const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -10,12 +10,15 @@ const Login = () => {
   const router = useRouter();
   const handleLogin = async (e) => {
     e.preventDefault();
-    
+    if (!email || !password) {
+      toast.error("Email and Password are required!");
+      return;
+    }
     const success = await dispatch(login(email, password)); // Wait for login response
     if (success) {
       router.push("/dashboard"); // Redirect after successful login
     } else {
-      alert("Login failed. Please check your credentials.");
+      toast.error("Login failed. Please check your credentials.");
     }
   };
 

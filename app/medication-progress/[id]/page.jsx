@@ -22,7 +22,7 @@ const MedicationProgress = () => {
         setProgress(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching medication progress:", error);
+        console.log("Error fetching medication progress:", error);
         setLoading(false);
       }
     };

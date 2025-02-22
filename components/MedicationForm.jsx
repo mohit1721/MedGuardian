@@ -221,7 +221,7 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
     if (newMedication) {
       dispatch(setMedications((prev) => [...prev, newMedication]));
     } else {
-      console.error("Medication creation failed.");
+      console.log("Medication creation failed.");
     }
 
     setIsLoading(false); // 🔴 Stop loader
@@ -233,7 +233,7 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
       const date = new Date(`1970-01-01T${time}:00`);
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
     } catch (error) {
-      console.error("Invalid time format:", error);
+      console.log("Invalid time format:", error);
       return "12:00 AM";
     }
   };
