@@ -8,6 +8,7 @@ import MedicationCard from "../../components/MedicationCard";
 import Navbar from "../../components/Navbar";
 import { fetchMedications } from "../../app/redux/actions/medicationActions"; // Fetch action
 import MedicationForm from "../../components/MedicationForm"; // Medication form component
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -15,12 +16,16 @@ const Dashboard = () => {
   const user = useSelector((state) => state.auth.user); // Get logged-in user
   const [showModal, setShowModal] = useState(false); // Modal toggle
   const [loading, setLoading] = useState(true); 
+  const router = useRouter()
   // Fetch medications when component mounts & user exists
   useEffect(() => {
     if (user && user._id) {
       setLoading(true); // Start loader
       dispatch(fetchMedications(user._id)).finally(() => setLoading(false)); // Stop loader
     
+    }
+    else{
+      router.push('/')
     }
   }, [dispatch, user]);
 
