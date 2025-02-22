@@ -8,7 +8,8 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { motion } from "framer-motion";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardianbe.onrender.com/api"
+const MEDICATIONS_URL =BASE_URL + "/medications"
 const MedicationProgress = () => {
   const router = useRouter();
   const [progress, setProgress] = useState(null);
@@ -18,7 +19,7 @@ const MedicationProgress = () => {
   useEffect(() => {
     const fetchMedicationProgress = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/medications/progress/${id}`);
+        const response = await axios.get(`${MEDICATIONS_URL}/progress/${id}`);
         setProgress(response.data);
         setLoading(false);
       } catch (error) {

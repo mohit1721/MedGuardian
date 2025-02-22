@@ -418,18 +418,7 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
             min={0}
             className="w-full p-3 border border-gray-300 rounded-lg"
           />
-
-  {/* <div className="flex items-center space-x-4">
-          <span className="text-gray-600">Reminder:</span>
-          <div
-            className={`relative w-11 h-6 rounded-full p-[0.9] cursor-pointer transition-all duration-300 ${reminderEnabledSt ? "bg-green-500" : "bg-gray-300"}`}
-            onClick={() => setReminderEnabled(!formData.reminderEnabled)}
-          >
-            <div
-              className={`absolute w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ${reminderEnabledSt ? "translate-x-6" : "translate-x-0"}`}
-            ></div>
-          </div>
-        </div> */}
+ 
  {/* Reminder Toggle */}
  <div className="flex items-center space-x-4">
             <span className="text-gray-600">Reminder:</span>
