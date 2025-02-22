@@ -8,9 +8,9 @@ import { loginUser } from "../redux/reducers/authReducer";
 const LoadUser = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("persist:root"))?.auth;
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      const user = JSON.parse(storedUser).user;
+      const user = JSON.parse(storedUser);
       if (user) dispatch(loginUser(user));
     }
   }, [dispatch]);
