@@ -35,15 +35,15 @@ const LoadUser = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    try {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const user = JSON.parse(storedUser); // ✅ Bas ek hi baar parse karo
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
         dispatch(loginUser(user));
+      } catch (error) {
+        console.error("Corrupt localStorage data:", error);
+        localStorage.removeItem("user"); // ✅ Corrupt data delete
       }
-    } catch (error) {
-      console.error("Invalid JSON in localStorage:", error);
-      localStorage.removeItem("user"); // ✅ Corrupt data hata do
     }
   }, [dispatch]);
 
@@ -51,3 +51,4 @@ const LoadUser = () => {
 };
 
 export default LoadUser;
+
