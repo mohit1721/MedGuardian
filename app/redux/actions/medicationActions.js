@@ -20,8 +20,12 @@ export const fetchMedications = () => async (dispatch) => {
     if (!authHeader) return;
 
     const response = await axios.get(MEDICATIONS_URL, { headers: authHeader });
-    dispatch(setMedications(Array.isArray(response?.data) ? response?.data : []));
-  } catch (error) {
+    if (response?.data?.success && Array.isArray(response?.data?.medications)) {
+      dispatch(setMedications(response.data.medications));
+    } else {
+      dispatch(setMedications([])); // Ensure empty array if data is incorrect
+    }  } catch (error) {
+ 
     console.log("Error fetching medications:", error.response?.data || error.message);
   }
 };

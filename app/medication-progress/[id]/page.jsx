@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardianbe.onrender.com/api"
-const MEDICATIONS_URL =BASE_URL + "/medications"
+const MEDICATIONS_URL = BASE_URL + "/medications"
 const MedicationProgress = () => {
   const router = useRouter();
   const [progress, setProgress] = useState(null);
@@ -62,7 +62,8 @@ const MedicationProgress = () => {
       <button onClick={() => router.push("/dashboard")} className="mb-4 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all">
           Back to Dashboard
         </button>
-      <div className="max-w-3xl mx-auto bg-[#D4EBF8] p-6 rounded-lg shadow-lg">
+        {
+          progress ? (<div className="max-w-3xl mx-auto bg-[#D4EBF8] p-6 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold mb-6 text-gray-900">Medication Details</h2>
 
         {/* Display Medication Details */}
@@ -101,7 +102,9 @@ const MedicationProgress = () => {
         </div>
 
       
-      </div>
+      </div>) : (<div>No Progress available</div> )
+        }
+      
     </motion.div>
   );
 };
