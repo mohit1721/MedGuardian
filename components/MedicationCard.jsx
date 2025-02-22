@@ -49,7 +49,7 @@ const MedicationCard = ({ medication }) => {
   };
 
   return (
-    <motion.div className="p-6 shadow-lg rounded-lg relative bg-white/30 p-6 shadow-xl rounded-lg capitalize backdrop-blur-lg border border-white/20 hover:shadow-2xl transition-all duration-300">
+    <motion.div className="p-6 h-fit shadow-lg rounded-lg relative bg-white/30 p-6 shadow-xl rounded-lg capitalize backdrop-blur-lg border border-white/20 hover:shadow-2xl transition-all duration-300">
       <h3 className="text-xl font-semibold">{medication?.name}</h3>
       <p>{medication?.dosage}</p>
 
