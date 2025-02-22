@@ -18,16 +18,17 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true); 
   const router = useRouter()
   // Fetch medications when component mounts & user exists
+  // Redirect if user is not logged in
   useEffect(() => {
-    if (user && user._id) {
-      setLoading(true); // Start loader
-      dispatch(fetchMedications(user._id)).finally(() => setLoading(false)); // Stop loader
-    
+    if (!user || !user._id) {
+      router.replace("/"); // ✅ `replace` use karo to avoid extra entry in history
+    } else {
+      setLoading(true);
+      dispatch(fetchMedications(user._id)).finally(() => setLoading(false));
     }
-    else{
-      router.push('/')
-    }
-  }, [dispatch, user]);
+
+    return () => {}; // ✅ Cleanup function
+  }, [dispatch, user, router]);
 
   return (
     <div className="min-h-screen text-[#EFE9D5]">
