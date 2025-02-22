@@ -21,7 +21,7 @@ const Dashboard = () => {
   // Redirect if user is not logged in
   useEffect(() => {
     if (!user || !user._id) {
-      router.replace("/"); // ✅ `replace` use karo to avoid extra entry in history
+      router.push("/"); // ✅ `replace` use karo to avoid extra entry in history
     } else {
       setLoading(true);
       dispatch(fetchMedications(user._id)).finally(() => setLoading(false));
