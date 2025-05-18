@@ -21,15 +21,25 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
     reminderEnabled: true,
   });
   const [reminderEnabledSt, setReminderEnabled] = useState(true);
+  // useEffect(() => {
+  //   if (medication) {
+  //     setFormData({
+  //       ...medication,
+  //       time: Array.isArray(medication.time) ? medication.time : ["12:00 AM"],
+  //     });
+  //   }
+  // }, [medication]);
+
+
   useEffect(() => {
     if (medication) {
       setFormData({
         ...medication,
-        time: Array.isArray(medication.time) ? medication.time : ["12:00 AM"],
+        time: medication.time?.length >= 0 ? [...medication.time] : ["12:00 AM"],
       });
     }
   }, [medication]);
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

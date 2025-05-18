@@ -14,21 +14,39 @@ import { toast } from "react-hot-toast";
 const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardianbe.onrender.com/api"; 
 const MEDICATIONS_URL = `${BASE_URL}/medications`;
 // const MEDICATIONS_URL= "http://localhost:5000/api/medications"
+// export const fetchMedications = () => async (dispatch) => {
+//   try {
+//     const authHeader = getAuthorizationHeader();
+//     if (!authHeader) return;
+
+//     const response = await axios.get(MEDICATIONS_URL, { headers: authHeader });
+//     if (response?.data?.success && Array.isArray(response?.data?.medications)) {
+//       dispatch(setMedications(response.data.medications));
+//     } else {
+//       dispatch(setMedications([])); // Ensure empty array if data is incorrect
+//     }  } catch (error) {
+ 
+//     console.log("Error fetching medications:", error.response?.data || error.message);
+//   }
+// };
 export const fetchMedications = () => async (dispatch) => {
   try {
     const authHeader = getAuthorizationHeader();
     if (!authHeader) return;
 
     const response = await axios.get(MEDICATIONS_URL, { headers: authHeader });
-    if (response?.data?.success && Array.isArray(response?.data?.medications)) {
-      dispatch(setMedications(response.data.medications));
-    } else {
-      dispatch(setMedications([])); // Ensure empty array if data is incorrect
-    }  } catch (error) {
- 
+
+    const meds = response?.data?.medications;
+
+    // ✅ If it's a valid array-like object, clone it to plain array
+    const safeMeds = meds?.length >= 0 ? [...meds] : [];
+
+    dispatch(setMedications(safeMeds));
+  } catch (error) {
     console.log("Error fetching medications:", error.response?.data || error.message);
   }
 };
+
 
 // ✅ Fetch medication details by ID
 export const fetchMedicationById = (medicationId) => async (dispatch) => {

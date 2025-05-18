@@ -12,7 +12,13 @@ import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const medications = useSelector((state) => state.medications?.medications || []);
+  const medicationsFromStore  = useSelector((state) => state.medications?.medications || []);
+ 
+  // ✅ Make a plain copy to avoid "revoked proxy" issue
+const medications = useMemo(() => [...medicationsFromStore], [medicationsFromStore]);
+
+ 
+ 
   const user = useSelector((state) => state.auth.user); // Get logged-in user
   const [showModal, setShowModal] = useState(false); // Modal toggle
   const [loading, setLoading] = useState(true); 
@@ -22,6 +28,8 @@ const Dashboard = () => {
   useEffect(() => {
     if (!user || !user._id) {
       router.push("/"); // ✅ `replace` use karo to avoid extra entry in history
+    return;
+    
     } else {
       setLoading(true);
       dispatch(fetchMedications(user._id)).finally(() => setLoading(false));
@@ -45,7 +53,7 @@ const Dashboard = () => {
         </div>
 
         {/* Medication Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? ( // ✅ Show loader while data is loading
             <p className="text-xl text-center text-gray-400 animate-pulse">
               Loading medications...
@@ -55,7 +63,22 @@ const Dashboard = () => {
           ) : (
             <p className="text-xl text-center text-gray-600">No medications found.</p>
           )}
-        </div>
+        </div> */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {loading ? (
+      <p className="text-xl text-center text-gray-400 animate-pulse">
+        Loading medications...
+      </p>
+    ) : medications.length > 0 ? (
+      medications.map((med, index) => (
+        <MedicationCard key={index} medication={med} />
+      ))
+    ) : (
+      <p className="text-xl text-center text-gray-600">No medications found.</p>
+    )}
+  </div>
+
       </div>
 
       {/* Medication Form Modal */}
