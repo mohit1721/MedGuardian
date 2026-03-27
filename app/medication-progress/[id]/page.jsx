@@ -8,7 +8,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { motion } from "framer-motion";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardianbe.onrender.com/api"
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardian-backend.onrender.com/api"
 const MEDICATIONS_URL = BASE_URL + "/medications"
 const MedicationProgress = () => {
   const router = useRouter();

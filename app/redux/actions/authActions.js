@@ -4,7 +4,7 @@ import axios from "axios";
 import { loginUser, logoutUser } from "../reducers/authReducer";
 import { toast } from "react-hot-toast";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardianbe.onrender.com/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://medguardian-backend.onrender.com/api";
 
 // Action for logging in the user
 export const login = (email, password) => async (dispatch) => {
