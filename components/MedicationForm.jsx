@@ -1,70 +1,49 @@
+'use client';
 
-"use client";
-
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { createMedicationAction, modifyMedicationAction } from "../app/redux/actions/medicationActions";
-import TimePicker from "react-time-picker";
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { createMedicationAction, modifyMedicationAction } from '../app/redux/actions/medicationActions';
+import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import { setMedications } from "@/app/redux/reducers/medicationReducer";
+import { setMedications } from '@/app/redux/reducers/medicationReducer';
 import moment from 'moment-timezone';
+
 const MedicationForm = ({ setShowModal, medication = null }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    dosage: "",
-    time: ["12:00 AM"],
-    startDate: "",
-    duration: "",
+    name: '',
+    dosage: '',
+    time: ['12:00 AM'],
+    startDate: '',
+    duration: '',
     reminderEnabled: true,
   });
-  const [reminderEnabledSt, setReminderEnabled] = useState(true);
-  // useEffect(() => {
-  //   if (medication) {
-  //     setFormData({
-  //       ...medication,
-  //       time: Array.isArray(medication.time) ? medication.time : ["12:00 AM"],
-  //     });
-  //   }
-  // }, [medication]);
-
 
   useEffect(() => {
     if (medication) {
       setFormData({
         ...medication,
-        time: medication.time?.length >= 0 ? [...medication.time] : ["12:00 AM"],
+        time: medication.time?.length >= 0 ? [...medication.time] : ['12:00 AM'],
       });
     }
   }, [medication]);
-  
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleTimeChange = (index, time) => {
-  //   const newTimeArray = [...formData.time];
-  //   newTimeArray[index] = time;
-  //   setFormData({ ...formData, time: newTimeArray });
-  // };
   const handleTimeChange = (index, time) => {
     if (!time) return;
-    
-    // Convert selected time to IST
-    const istTime = moment(time, "hh:mm A").tz("Asia/Kolkata").format("hh:mm A");
-    
+    const istTime = moment(time, 'hh:mm A').tz('Asia/Kolkata').format('hh:mm A');
     const newTimeArray = [...formData.time];
     newTimeArray[index] = istTime;
-    
     setFormData({ ...formData, time: newTimeArray });
-    console.log("✅ Selected Time (IST):", istTime); // Debugging Log
-    console.log("✅ Selected Time :", time); // Debugging Log
   };
-  
+
   const addTimeSlot = () => {
-    setFormData({ ...formData, time: [...formData.time, "12:00 AM"] });
+    setFormData({ ...formData, time: [...formData.time, '12:00 AM'] });
   };
 
   const removeTimeSlot = (index) => {
@@ -92,23 +71,18 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center text-black/50">
-      {/* Overlay to close modal */}
-      <div className="absolute inset-0 bg-black/50 z-40" onClick={() => setShowModal(false)}></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 text-slate-100">
+      <div className="absolute inset-0 bg-slate-950/60" onClick={() => setShowModal(false)} />
 
-      {/* Modal Content */}
-      <div className="relative bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md z-50 max-h-[80vh] overflow-y-auto">
-        {/* Modal Header */}
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">{medication ? "Edit Medication" : "Add Medication"}</h2>
-          <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-gray-700">
+      <div className="glass-card relative z-50 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-slate-500/30 p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold">{medication ? 'Edit Medication' : 'Add Medication'}</h2>
+          <button onClick={() => setShowModal(false)} className="rounded-md border border-slate-500/30 px-2 py-1 text-slate-300 hover:bg-slate-800/65">
             ✖
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Medication Name */}
           <input
             type="text"
             name="name"
@@ -116,10 +90,9 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
             onChange={handleChange}
             placeholder="Medication Name"
             required
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full rounded-xl border border-slate-500/35 bg-slate-900/70 p-3 text-sm text-slate-100 outline-none focus:border-sky-400"
           />
 
-          {/* Dosage */}
           <input
             type="text"
             name="dosage"
@@ -127,45 +100,42 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
             onChange={handleChange}
             placeholder="Dosage"
             required
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full rounded-xl border border-slate-500/35 bg-slate-900/70 p-3 text-sm text-slate-100 outline-none focus:border-sky-400"
           />
 
-          {/* Time Slots with Remove Option */}
           <div className="space-y-3">
             {formData.time.map((time, index) => (
-              <div key={index} className="flex items-center gap-3">
+              <div key={index} className="flex items-center gap-2">
                 <TimePicker
                   onChange={(newTime) => handleTimeChange(index, newTime)}
                   value={time}
                   format="hh:mm a"
-                  className="w-full border-none rounded-lg"
+                  className="w-full rounded-xl border border-slate-500/35 bg-slate-900/70 px-3 py-2"
                   disableClock
                   clockIcon={null}
                   clearIcon={null}
                 />
                 {formData.time.length > 1 && (
-                  <button type="button" onClick={() => removeTimeSlot(index)} className="text-gray-500 hover:text-red-700">
-                    <span className="h-6 w-6">✖</span>
+                  <button type="button" onClick={() => removeTimeSlot(index)} className="rounded-lg bg-rose-500 px-3 py-2 text-sm font-semibold text-rose-950 hover:bg-rose-400">
+                    ✖
                   </button>
                 )}
               </div>
             ))}
-            <button type="button" onClick={addTimeSlot} className="px-3 py-2 bg-green-500 text-white rounded-lg">
+            <button type="button" onClick={addTimeSlot} className="rounded-lg bg-emerald-400 px-3 py-2 text-sm font-semibold text-emerald-950 hover:bg-emerald-300">
               + Add Time
             </button>
           </div>
 
-          {/* Start Date */}
           <input
             type="date"
             name="startDate"
             value={formData.startDate}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full rounded-xl border border-slate-500/35 bg-slate-900/70 p-3 text-sm text-slate-100 outline-none focus:border-sky-400"
           />
 
-          {/* Duration */}
           <input
             type="number"
             name="duration"
@@ -173,31 +143,36 @@ const MedicationForm = ({ setShowModal, medication = null }) => {
             onChange={handleChange}
             required
             min={0}
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full rounded-xl border border-slate-500/35 bg-slate-900/70 p-3 text-sm text-slate-100 outline-none focus:border-sky-400"
+            placeholder="Duration (days)"
           />
- 
- {/* Reminder Toggle */}
- <div className="flex items-center space-x-4">
-            <span className="text-gray-600">Reminder:</span>
-            <div
-              className={`relative w-12 h-6 p-[0.99] mt-1 rounded-full cursor-pointer transition-all duration-300 ${formData.reminderEnabled ? "bg-green-500" : "bg-gray-300"}`}
+
+          <div className="flex items-center justify-between rounded-xl border border-slate-600/35 bg-slate-900/60 px-3 py-2">
+            <span className="text-sm text-slate-300">Reminders enabled</span>
+            <button
+              type="button"
+              className={`relative h-6 w-12 rounded-full transition ${formData.reminderEnabled ? 'bg-emerald-400' : 'bg-slate-600'}`}
               onClick={() => setFormData({ ...formData, reminderEnabled: !formData.reminderEnabled })}
             >
-              <div
-                className={`absolute w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ${formData.reminderEnabled ? "translate-x-6" : "translate-x-0"}`}
-              ></div>
-            </div>
+              <span
+                className={`absolute top-0.5 h-5 w-5 rounded-full bg-slate-950 transition ${
+                  formData.reminderEnabled ? 'left-6' : 'left-0.5'
+                }`}
+              />
+            </button>
           </div>
 
-
-          {/* Action Buttons */}
-          <div className="flex justify-between">
-            <button type="button" onClick={() => setShowModal(false)} className="px-5 py-3 bg-gray-400 text-white rounded-lg">
+          <div className="flex justify-end gap-2 pt-1">
+            <button type="button" onClick={() => setShowModal(false)} className="rounded-lg border border-slate-500/35 px-4 py-2 text-sm font-semibold text-slate-300 hover:bg-slate-800/65">
               Cancel
             </button>
 
-            <button type="submit" className="px-5 py-3 bg-blue-600 text-white rounded-lg flex items-center justify-center" disabled={isLoading}>
-              {isLoading ? <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : (medication ? "Update" : "Add")}
+            <button
+              type="submit"
+              className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-sky-400 disabled:opacity-60"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Saving...' : medication ? 'Update' : 'Add'}
             </button>
           </div>
         </form>
